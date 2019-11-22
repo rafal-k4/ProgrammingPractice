@@ -14,7 +14,7 @@ namespace ConsoleNetCore30
         {
             var assembly = typeof(IStudy).Assembly;
 
-            var projectDirectoryInfo = TryGetSolutionDirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            //var projectDirectoryInfo = TryGetSolutionDirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
 
             var types = assembly.GetTypes();
 
@@ -39,15 +39,6 @@ namespace ConsoleNetCore30
             return allFiles.OrderByDescending(x => x.LastWriteTime).First();
         }
 
-        public static DirectoryInfo TryGetSolutionDirectoryInfo(string currentPath = null)
-        {
-            var directory = new DirectoryInfo(
-                currentPath ?? Directory.GetCurrentDirectory());
-            while (directory != null && !directory.GetFiles("*.sln").Any())
-            {
-                directory = directory.Parent;
-            }
-            return directory;
-        }
+
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleNetCore30", "Console
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeCase", "PracticeCase\PracticeCase.csproj", "{A6F9082C-9486-4588-955F-19B7B2D089F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgrammingPracticeHelper", "ProgrammingPracticeHelper\ProgrammingPracticeHelper.csproj", "{BC68EEA0-6979-4D80-A903-8E4E7BDABF4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A6F9082C-9486-4588-955F-19B7B2D089F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6F9082C-9486-4588-955F-19B7B2D089F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6F9082C-9486-4588-955F-19B7B2D089F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC68EEA0-6979-4D80-A903-8E4E7BDABF4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC68EEA0-6979-4D80-A903-8E4E7BDABF4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC68EEA0-6979-4D80-A903-8E4E7BDABF4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC68EEA0-6979-4D80-A903-8E4E7BDABF4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
