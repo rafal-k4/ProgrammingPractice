@@ -2,8 +2,7 @@
 using ProgrammingPracticeHelper;
 using System;
 using System.Linq;
-
-
+using System.Reflection;
 
 namespace ConsoleNetCore30
 {
@@ -13,7 +12,9 @@ namespace ConsoleNetCore30
         {
             var assembly = typeof(IStudy).Assembly;
 
-            var fileSeekerHelper = new StudyFileSeeker(assembly.GetTypes().Where(x => x.IsClass), AppDomain.CurrentDomain.BaseDirectory);
+            var path = Assembly.GetEntryAssembly().Location;
+
+            var fileSeekerHelper = new StudyFileSeeker(assembly.GetTypes().Where(x => x.IsClass && x is IStudy), AppDomain.CurrentDomain.BaseDirectory);
 
             var studyType = fileSeekerHelper.GetLatestStudyType();
 
