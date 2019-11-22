@@ -8,10 +8,10 @@ namespace ProgrammingPracticeHelper
 {
     public class StudyFileSeeker
     {
-        private Type[] types { get; }
+        private IEnumerable<Type> types { get; }
         private string projectBasePath { get; }
 
-        public StudyFileSeeker(Type[] types, string projectBasePath)
+        public StudyFileSeeker(IEnumerable<Type> types, string projectBasePath)
         {
             this.types = types;
             this.projectBasePath = projectBasePath;

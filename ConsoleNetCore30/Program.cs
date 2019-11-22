@@ -1,7 +1,6 @@
 ﻿using PracticeCase;
+using ProgrammingPracticeHelper;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 
@@ -14,18 +13,10 @@ namespace ConsoleNetCore30
         {
             var assembly = typeof(IStudy).Assembly;
 
-            //var projectDirectoryInfo = TryGetSolutionDirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
+            var fileSeekerHelper = new StudyFileSeeker(assembly.GetTypes().Where(x => x.IsClass), AppDomain.CurrentDomain.BaseDirectory);
 
-            var types = assembly.GetTypes();
-
-            var file = SearchForFile(types, projectDirectoryInfo);
-        }
-
-        private static FileInfo SearchForFile(Type[] types, DirectoryInfo projectDirectoryInfo)
-        {
+            var studyType = fileSeekerHelper.GetLatestStudyType();
 
         }
-
-
     }
 }

@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PracticeCase\PracticeCase.csproj" />
+    <ProjectReference Include="..\ProgrammingPracticeHelper\ProgrammingPracticeHelper.csproj" />
   </ItemGroup>
 
 </Project>
