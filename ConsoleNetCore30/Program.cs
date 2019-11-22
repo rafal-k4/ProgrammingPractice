@@ -1,4 +1,5 @@
 ﻿using PracticeCase;
+using PracticeCase.StudyCases;
 using ProgrammingPracticeHelper;
 using System;
 using System.Linq;
@@ -12,11 +13,13 @@ namespace ConsoleNetCore30
         {
             var assembly = typeof(IStudy).Assembly;
 
-            var path = Assembly.GetEntryAssembly().Location;
-
-            var fileSeekerHelper = new StudyFileSeeker(assembly.GetTypes().Where(x => x.IsClass && x is IStudy), AppDomain.CurrentDomain.BaseDirectory);
+            var fileSeekerHelper = new StudyFileSeeker(assembly.GetTypes().Where(x => x.IsClass && x.GetInterface(nameof(IStudy)) != null), AppDomain.CurrentDomain.BaseDirectory);
 
             var studyType = fileSeekerHelper.GetLatestStudyType();
+
+            var instance = (IStudy)Activator.CreateInstance(studyType);
+
+            instance.Execute();
 
         }
     }

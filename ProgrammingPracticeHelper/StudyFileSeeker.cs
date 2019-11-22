@@ -13,6 +13,10 @@ namespace ProgrammingPracticeHelper
 
         public StudyFileSeeker(IEnumerable<Type> types, string projectBasePath)
         {
+            if(types.Any() == false)
+            {
+                throw new Exception("No types provided");
+            }
             this.types = types;
             this.projectBasePath = projectBasePath;
         }
