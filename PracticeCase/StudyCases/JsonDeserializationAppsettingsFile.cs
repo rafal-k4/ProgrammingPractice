@@ -8,7 +8,7 @@ namespace PracticeCase.StudyCases
     {
         public void Execute()
         {
-            
+            ;
         }
     }
 }
