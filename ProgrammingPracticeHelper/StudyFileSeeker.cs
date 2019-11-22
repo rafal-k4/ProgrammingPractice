@@ -22,10 +22,36 @@ namespace ProgrammingPracticeHelper
         {
             var solutionDirectoryInfo = TryGetSolutionDirectoryInfo();
 
-            var LatestStudyType = Get
-
+            return GetLatestWrittenStudyType(solutionDirectoryInfo);
         }
 
+
+
+        private Type GetLatestWrittenStudyType(DirectoryInfo solutionDirectoryInfo)
+        {
+            var allFiles = new List<FileSeekerModel>();
+
+            foreach (var item in types)
+            {
+                var resultFile = SearchForFile(solutionDirectoryInfo, item.Name);
+                if (resultFile.Any())
+                {
+                    allFiles.Add(new FileSeekerModel { FileType = item, FileInfo = resultFile.First() });
+                }
+            }
+
+            if (allFiles.Any())
+            {
+                return allFiles.OrderByDescending(x => x.FileInfo.LastWriteTime).First().FileType;
+            }
+
+            throw new FileNotFoundException($"File Not Found");
+        }
+
+        private FileInfo[] SearchForFile(DirectoryInfo solutionDirectoryInfo, string name)
+        {
+            return solutionDirectoryInfo.GetFiles($"{name}*", SearchOption.AllDirectories);
+        }
 
         private DirectoryInfo TryGetSolutionDirectoryInfo()
         {

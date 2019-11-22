@@ -23,20 +23,7 @@ namespace ConsoleNetCore30
 
         private static FileInfo SearchForFile(Type[] types, DirectoryInfo projectDirectoryInfo)
         {
-            var allFiles = new List<FileInfo>();
 
-            foreach (var item in types)
-            {
-                if (projectDirectoryInfo.GetFiles($"{item.Name}*", SearchOption.AllDirectories).Any())
-                {
-                    allFiles.Add(projectDirectoryInfo.GetFiles($"{item.Name}*", SearchOption.AllDirectories).First());
-                }
-            }
-            ;
-
-
-
-            return allFiles.OrderByDescending(x => x.LastWriteTime).First();
         }
 
 
