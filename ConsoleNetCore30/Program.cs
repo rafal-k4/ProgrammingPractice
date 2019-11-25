@@ -19,7 +19,14 @@ namespace ConsoleNetCore30
 
             var instance = (IStudy)Activator.CreateInstance(studyType);
 
-            instance.Execute();
+            while (true)
+            {
+                instance.Execute();
+
+                Console.ReadKey();
+            }
+
+
 
         }
     }
