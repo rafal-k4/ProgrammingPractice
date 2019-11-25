@@ -25,9 +25,6 @@ namespace ConsoleNetCore30
 
                 Console.ReadKey();
             }
-
-
-
         }
     }
 }
