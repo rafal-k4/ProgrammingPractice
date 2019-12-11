@@ -27,6 +27,8 @@ namespace TypeScriptPractice
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseMvcWithDefaultRoute();
         }
     }
