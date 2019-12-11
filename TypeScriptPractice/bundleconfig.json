@@ -1,0 +1,13 @@
+[
+  {
+    "outputFileName": "wwwroot/js/typescript.min.js",
+    "inputFiles": [
+      "wwwroot/scripts/scriptGeneratedFromTS/**.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]
