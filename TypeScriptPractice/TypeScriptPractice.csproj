@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\tsScripts\Test.ts" />
+    <Content Remove="wwwroot\tsScripts\TypeScriptPractice.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\tsScripts\Test.ts" />
+    <TypeScriptCompile Include="wwwroot\tsScripts\TypeScriptPractice.ts" />
   </ItemGroup>
 
 </Project>

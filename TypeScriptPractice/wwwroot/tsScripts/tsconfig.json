@@ -5,7 +5,8 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    "outDir": "../scripts/scriptGeneratedFromTS"
+    "outDir": "../scripts/scriptGeneratedFromTS",
+    "lib": [ "es2018", "dom" ]
   },
   "exclude": [
     "node_modules",
