@@ -8,6 +8,7 @@
   <ItemGroup>
     <Content Remove="wwwroot\tsScripts\Test.ts" />
     <Content Remove="wwwroot\tsScripts\TypeScriptPractice.ts" />
+    <Content Remove="wwwroot\tsScripts\TypeScriptRxJsPractice.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,12 +19,12 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
-    <Folder Include="wwwroot\scripts\scriptGeneratedFromTS\" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\tsScripts\Test.ts" />
     <TypeScriptCompile Include="wwwroot\tsScripts\TypeScriptPractice.ts" />
+    <TypeScriptCompile Include="wwwroot\tsScripts\TypeScriptRxJsPractice.ts" />
   </ItemGroup>
 
 </Project>

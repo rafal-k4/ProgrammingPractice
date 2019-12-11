@@ -6,7 +6,7 @@
     "sourceMap": true,
     "target": "es5",
     "outDir": "../scripts/scriptGeneratedFromTS",
-    "lib": [ "es2018", "dom" ]
+    "lib": [ "ES5", "ES6", "ES2015", "ES2018", "dom" ]
   },
   "exclude": [
     "node_modules",
