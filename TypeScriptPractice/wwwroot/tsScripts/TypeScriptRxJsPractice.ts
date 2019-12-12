@@ -1,6 +1,10 @@
 ﻿
 import { Subscription, fromEvent } from 'rxjs';
 
+export function TestExportFunction() {
+    new RxJsPractice().TestMethod();
+}
+
 export class RxJsPractice {
 
     subscription: Subscription;
