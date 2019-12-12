@@ -6,6 +6,9 @@ var RxJsPractice = /** @class */ (function () {
         var source = rxjs_1.fromEvent(document.getElementById('testInputId'), 'focusout');
         this.subscription = source.subscribe(function (val) { return console.log(val); });
     }
+    RxJsPractice.prototype.TestMethod = function () {
+        console.log("Test from TestMethod");
+    };
     return RxJsPractice;
 }());
 exports.RxJsPractice = RxJsPractice;

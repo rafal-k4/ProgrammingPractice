@@ -9,4 +9,8 @@ export class RxJsPractice {
         const source = fromEvent(document.getElementById('testInputId'), 'focusout');
         this.subscription = source.subscribe(val => console.log(val));
     }
+
+    TestMethod(): void {
+        console.log("Test from TestMethod");
+    }
 }
