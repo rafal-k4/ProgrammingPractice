@@ -3,6 +3,7 @@
     "rxjs": "^6.5.3"
   },
   "devDependencies": {
+    "expose-loader": "^0.7.5",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.3",
     "webpack": "^4.41.2",
@@ -10,7 +11,8 @@
   },
   "scripts": {
     "test1": "echo TEST from ts config.json scripts section TEST",
-    "start": "webpack --mode development --watch",
+    "startWatch": "webpack --mode development --watch",
+    "start": "webpack --mode development",
     "build": "webpack --mode production"
   }
 }
