@@ -1,5 +1,13 @@
 {
   "dependencies": {
     "rxjs": "^6.5.3"
+  },
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "scripts": {
+    "test1": "echo TEST from ts config.json scripts section TEST",
+    "build": "webpack --mode development --watch"
   }
 }
