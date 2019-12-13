@@ -2,11 +2,14 @@
 import { Subscription, fromEvent } from 'rxjs';
 
 export function TestExportFunction() {
-    new RxJsPractice().TestMethod();
+    let entryPoint = new RxJsPractice();
+    entryPoint.TestMethod();
+
+    entryPoint.ApiCall();
 }
 
 export class RxJsPractice {
-
+    
     subscription: Subscription;
 
     constructor() {
@@ -19,7 +22,8 @@ export class RxJsPractice {
     TestMethod(): void {
         console.log("Test from TestMethod");
     }
+
+    ApiCall() {
+        console.log("hello from api call method");
+    }
 }
-
-
-let something = new RxJsPractice();
