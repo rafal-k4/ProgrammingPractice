@@ -37,10 +37,10 @@ else
 }
 
 @code {
-    private WeatherForecastModel[] forecasts;
+    private IEnumerable<WeatherForecastModel> forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetJsonAsync<WeatherForecastModel[]>("sample-data/weather.json");
+        forecasts = await GetWeatherForecst();
     }
 }
