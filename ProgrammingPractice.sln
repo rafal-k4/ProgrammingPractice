@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PracticeCase", "PracticeCas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProgrammingPracticeHelper", "ProgrammingPracticeHelper\ProgrammingPracticeHelper.csproj", "{BC68EEA0-6979-4D80-A903-8E4E7BDABF4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TypeScriptPractice", "TypeScriptPractice\TypeScriptPractice.csproj", "{647C6F2D-EEC9-4165-96AF-FC9F6FB0BD6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeScriptPractice", "TypeScriptPractice\TypeScriptPractice.csproj", "{647C6F2D-EEC9-4165-96AF-FC9F6FB0BD6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorPractice", "BlazorPractice\BlazorPractice.csproj", "{34D301A9-AF62-4C44-AEFC-FAFF96404613}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{647C6F2D-EEC9-4165-96AF-FC9F6FB0BD6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{647C6F2D-EEC9-4165-96AF-FC9F6FB0BD6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{647C6F2D-EEC9-4165-96AF-FC9F6FB0BD6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34D301A9-AF62-4C44-AEFC-FAFF96404613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34D301A9-AF62-4C44-AEFC-FAFF96404613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34D301A9-AF62-4C44-AEFC-FAFF96404613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34D301A9-AF62-4C44-AEFC-FAFF96404613}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
