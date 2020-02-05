@@ -44,12 +44,12 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var customer in customers)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
+                    <td>@customer.Id</td>
+                    <td>@customer.Lastname</td>
+                    <td>@customer.FirstName</td>
                 </tr>
             }
         </tbody>
@@ -71,7 +71,9 @@ else
             this.StateHasChanged();
         }
 
+        customers = new List<Customer>();
 
+        customers = dbContext.Customer.ToList();
 
     }
 }
