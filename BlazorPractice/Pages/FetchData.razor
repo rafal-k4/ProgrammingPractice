@@ -37,10 +37,17 @@ else
 }
 
 @code {
-    private IEnumerable<WeatherForecastModel> forecasts;
+    private ICollection<WeatherForecastModel> forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await GetWeatherForecst();
+        forecasts = new List<WeatherForecastModel>();
+        
+        await foreach (var item in GetWeatherForecst())
+        {
+            forecasts.Add(item);
+            this.StateHasChanged();
+        }
+
     }
 }

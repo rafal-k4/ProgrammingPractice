@@ -15,9 +15,15 @@ namespace BlazorPractice
 
        
 
-        public async Task<IEnumerable<WeatherForecastModel>> GetWeatherForecst()
+        public async IAsyncEnumerable<WeatherForecastModel> GetWeatherForecst()
         {
-            return await httpClient.GetJsonAsync<IEnumerable<WeatherForecastModel>>("sample-data/weather.json");
+            var weatherResult = await httpClient.GetJsonAsync<IEnumerable<WeatherForecastModel>>("sample-data/weather.json");
+
+            foreach (var item in weatherResult)
+            {
+                await Task.Delay(500);
+                yield return item;
+            }
         }
     }
 }
