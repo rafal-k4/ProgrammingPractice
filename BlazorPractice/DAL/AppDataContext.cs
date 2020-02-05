@@ -8,5 +8,9 @@ namespace BlazorPractice.DAL
 {
     public class AppDataContext: DbContext
     {
+        public AppDataContext() : base()
+        {
+
+        }
     }
 }
