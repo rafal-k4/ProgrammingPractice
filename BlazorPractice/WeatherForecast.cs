@@ -10,12 +10,10 @@ namespace BlazorPractice
 {
     public class WeatherForecast : ComponentBase
     {
+        [Inject]
         private HttpClient httpClient { get; set; }
 
-        public WeatherForecast(HttpClient httpClient)
-        {
-            this.httpClient = httpClient;
-        }
+       
 
         public async Task<IEnumerable<WeatherForecastModel>> GetWeatherForecst()
         {
