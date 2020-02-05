@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BlazorPractice.DAL.DbModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,12 @@ namespace BlazorPractice.DAL
 {
     public class AppDataContext: DbContext
     {
-        public AppDataContext() : base()
+        public AppDataContext(DbContextOptions<AppDataContext> options) : base(options)
         {
 
         }
+
+        public DbSet<Person> People { get; set; }
+
     }
 }
