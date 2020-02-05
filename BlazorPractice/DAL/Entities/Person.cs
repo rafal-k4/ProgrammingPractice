@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorPractice.DAL.DbModels
+namespace BlazorPractice.DAL.Entities
 {
     public class Person
     {
