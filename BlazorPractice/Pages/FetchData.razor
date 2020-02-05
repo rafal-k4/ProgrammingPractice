@@ -34,20 +34,44 @@ else
             }
         </tbody>
     </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 @code {
     private ICollection<WeatherForecastModel> forecasts;
 
+    private ICollection<Customer> customers;
+
     protected override async Task OnInitializedAsync()
     {
         forecasts = new List<WeatherForecastModel>();
-        
+
         await foreach (var item in GetWeatherForecst())
         {
             forecasts.Add(item);
             this.StateHasChanged();
         }
+
+
 
     }
 }
