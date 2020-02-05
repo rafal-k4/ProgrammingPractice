@@ -1,4 +1,5 @@
-﻿using BlazorPractice.DAL.DbModels;
+﻿
+using BlazorPractice.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
