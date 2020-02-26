@@ -15,7 +15,7 @@ namespace BlazorPractice.DAL.DataContext
 
         }
 
-        public DbSet<Person> People { get; set; }
+        //public DbSet<Person> People { get; set; }
 
         public DbSet<Customer> Customer { get; set; }
 

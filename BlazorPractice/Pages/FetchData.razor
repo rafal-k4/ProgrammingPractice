@@ -35,25 +35,7 @@ else
         </tbody>
     </table>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in customers)
-            {
-                <tr>
-                    <td>@customer.Id</td>
-                    <td>@customer.Lastname</td>
-                    <td>@customer.FirstName</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
 }
 
 @code {
