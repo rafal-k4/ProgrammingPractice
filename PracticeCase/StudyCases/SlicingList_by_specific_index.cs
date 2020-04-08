@@ -14,8 +14,8 @@ namespace PracticeCase.StudyCases
 
             // expected: one list of { 1, 2, 3} and other of { 4, 5, 6, 7 }
 
-            var firstSlicedList = list.GetRange(0, sliceIndex);
-            var secondSlicedList = list.GetRange(sliceIndex, list.Count - sliceIndex);
+            var firstSlicedList = list.GetRange(0, sliceIndex); // 1, 2, 3
+            var secondSlicedList = list.GetRange(sliceIndex, list.Count - sliceIndex); // 4, 5, 6, 7
             ;
 
         }
