@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using System.Text;
+
 
 namespace PracticeCase.StudyCases
 {
-    class GettingPropertiesAndSubPropertiesOfAClassByAttributeRecursiveMethod : IStudy
+    public class GettingPropertiesAndSubPropertiesOfAClassByAttributeRecursiveMethod : IStudy
     {
         public void Execute()
         {
@@ -46,7 +45,7 @@ namespace PracticeCase.StudyCases
             var propIsDefined = properties[3].IsDefined(typeof(RequiredAttribute), true); // true
             var propIsNotDefined = properties[2].IsDefined(typeof(RequiredAttribute), true); // false
 
-
+             
 
 
 
