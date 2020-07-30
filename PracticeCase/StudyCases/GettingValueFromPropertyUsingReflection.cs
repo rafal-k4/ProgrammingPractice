@@ -34,13 +34,11 @@ namespace PracticeCase.StudyCases
 
             var anonymoysOBJ = new {A = new {B = new {C = new {D = new {E = new {F = "Nested"}}}}}};
 
-            var nested1 = GetPropertyValue(obj, "Name");
-            var nested2 = GetPropertyValue(obj, "SomeClass.Count");
-            var nested3 = GetPropertyValue(obj, "SomeClass.C.Title");
-            var nested4 = GetPropertyValue(anonymoysOBJ, "A.B.C.D.E.F");
-            Console.WriteLine(nested1);
-            Console.WriteLine(nested2);
-            Console.WriteLine(nested3);
+            var nested1 = GetPropertyValue(obj, "Name"); // "aa"
+            var nested2 = GetPropertyValue(obj, "SomeClass.Count"); // 42
+            var nested3 = GetPropertyValue(obj, "SomeClass.C.Title"); // "ASDASD"
+            var nested4 = GetPropertyValue(anonymoysOBJ, "A.B.C.D.E.F"); // "Nested"
+
 
             ;
             
