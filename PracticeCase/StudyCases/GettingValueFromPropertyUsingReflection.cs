@@ -60,8 +60,10 @@ namespace PracticeCase.StudyCases
 
         public static object GetPropertyValue(object src, string propName)
         {
-            if (src == null) throw new ArgumentException("Value cannot be null.", "src");
-            if (propName == null) throw new ArgumentException("Value cannot be null.", "propName");
+            if (src == null || propName == null)
+            {
+                return null;
+            }
 
             if (propName.Contains("."))//complex type nested
             {
