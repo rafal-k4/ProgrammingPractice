@@ -92,15 +92,50 @@ namespace PracticeCase.StudyCases
                 }
             };
 
-
+            /*
             PropertyInfo propInfo1 = testObj.GetType().GetProperty("nestedProp");
-            PropertyInfo propInfo2 = testObj.nestedProp.GetType().GetProperty("EvenMoreNestedProp");
-            PropertyInfo propInfo3 = testObj.nestedProp.EvenMoreNestedProp.GetType().GetProperty("SomeString");
+            var propValue1 = propInfo1.GetValue(testObj);
+            PropertyInfo propInfo2 = propValue1.GetType().GetProperty("EvenMoreNestedProp");
+            var propValue2 = propInfo2.GetValue(propValue1);
+            PropertyInfo propInfo3 = propValue2.GetType().GetProperty("SomeString");
+            var propValue3 = propInfo3.GetValue(propValue2);
 
             var d1 = (Func<T1, T2>) Delegate.CreateDelegate(typeof(Func<T1, T2>), propInfo1.GetMethod);
             var d2 = (Func<T2, T3>) Delegate.CreateDelegate(typeof(Func<T2, T3>), propInfo2.GetMethod);
             var d3 = (Func<T3, string>) Delegate.CreateDelegate(typeof(Func<T3, string>), propInfo3.GetMethod);
-            
+            */
+
+            /*
+            PropertyInfo propInfo1 = testObj.GetType().GetProperty("nestedProp");
+            var d1 = (Func<T1, T2>)Delegate.CreateDelegate(typeof(Func<T1, T2>), propInfo1.GetMethod);
+            var propValue1 = d1(testObj);
+
+            PropertyInfo propInfo2 = propValue1.GetType().GetProperty("EvenMoreNestedProp");
+            var d2 = (Func<T2, T3>)Delegate.CreateDelegate(typeof(Func<T2, T3>), propInfo2.GetMethod);
+            var propValue2 = d2(propValue1);
+
+            PropertyInfo propInfo3 = propValue2.GetType().GetProperty("SomeString");
+            var d3 = (Func<T3, string>)Delegate.CreateDelegate(typeof(Func<T3, string>), propInfo3.GetMethod);
+            var propValue3 = d3(propValue2);
+            */
+
+
+            PropertyInfo propInfo1 = testObj.GetType().GetProperty("nestedProp");
+            var d1 = (Func<T1, T2>)Delegate.CreateDelegate(typeof(Func<T1, T2>), propInfo1.GetMethod);
+            var propValue1 = d1(testObj);
+
+            PropertyInfo propInfo2 = propValue1.GetType().GetProperty("EvenMoreNestedProp");
+            var d2 = (Func<T2, T3>)Delegate.CreateDelegate(typeof(Func<T2, T3>), propInfo2.GetMethod);
+            var propValue2 = d2(propValue1);
+
+            PropertyInfo propInfo3 = propValue2.GetType().GetProperty("SomeString");
+            var d3 = (Func<T3, string>)Delegate.CreateDelegate(typeof(Func<T3, string>), propInfo3.GetMethod);
+            var propValue3 = d3(propValue2);
+
+            Func<Func<Func<T1, T2>, T3>, string> monsterFunc = x => x(d1).SomeString;
+
+            monsterFunc(d2);
+
             var result = d1(testObj);
             var result2 = d2(result);
             var result3 = d3(result2);
