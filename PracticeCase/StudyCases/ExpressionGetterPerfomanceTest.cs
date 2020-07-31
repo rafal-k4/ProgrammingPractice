@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PracticeCase.StudyCases
 {
-    class ExpressionGetterPefromanceTest : IStudy
+    class ExpressionGetterPerfomanceTest : IStudy
     {
         public void Execute()
         {
