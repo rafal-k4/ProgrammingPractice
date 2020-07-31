@@ -33,10 +33,39 @@ namespace PracticeCase.StudyCases
         }
 
 
-        public static Func<object, string> GetDelegate(string propertyName)
+        public static Func<object, object> GetDelegate(object obj, string propertyName)
         {
+            if (propertyName.Contains('.') == false)
+            {
+                PropertyInfo propertyInfo = obj.GetType().GetProperty(propertyName);
+                return (Func<object, object>) Delegate.CreateDelegate(typeof(Func<object, object>), propertyInfo.GetMethod);
+            }
+
+            var splittedProperty = propertyName.Split('.', 2);
+
+            PropertyInfo propertyInfo1 = obj.GetType().GetProperty(splittedProperty[0]);
+            //var d = (Func<object, object>)Delegate.CreateDelegate(typeof(Func<object, object>), propertyInfo1.GetMethod);
+
+            return GetDelegate(propertyInfo1.GetValue(obj), splittedProperty[1]);
+
             return null;
 
+        }
+
+        public static PropertyInfo RecursiveExperiment(object obj, string propertyName)
+        {
+            if (propertyName.Contains('.') == false)
+            {
+                PropertyInfo propertyInfo = obj.GetType().GetProperty(propertyName);
+                return propertyInfo;
+            }
+
+            var splittedProperty = propertyName.Split('.', 2);
+
+            PropertyInfo propertyInfo1 = obj.GetType().GetProperty(splittedProperty[0]);
+
+            var result = RecursiveExperiment(propertyInfo1.GetValue(obj), splittedProperty[1]);
+            return result;
         }
 
         public void Execute()
@@ -44,12 +73,7 @@ namespace PracticeCase.StudyCases
             var propertyName = "nestedProp.EvenMoreNestedProp.SomeString";
             var f = CreateFieldGetterA<T1>(propertyName);
             
-
-
             PropertyInfo propertyInfo = typeof(T1).GetProperty("FirstProp");
-
-            
-
             var d = (Func<T1, string>)Delegate.CreateDelegate(typeof(Func<T1, string>), propertyInfo.GetMethod);
             
 
@@ -76,10 +100,16 @@ namespace PracticeCase.StudyCases
             var d1 = (Func<T1, T2>) Delegate.CreateDelegate(typeof(Func<T1, T2>), propInfo1.GetMethod);
             var d2 = (Func<T2, T3>) Delegate.CreateDelegate(typeof(Func<T2, T3>), propInfo2.GetMethod);
             var d3 = (Func<T3, string>) Delegate.CreateDelegate(typeof(Func<T3, string>), propInfo3.GetMethod);
-
+            
             var result = d1(testObj);
             var result2 = d2(result);
             var result3 = d3(result2);
+
+            var result4 = d3(d2(d1(testObj)));
+
+
+            var result5 = RecursiveExperiment(testObj, propertyName);
+            
             ;
 
             int repCount = 100_000_000;
