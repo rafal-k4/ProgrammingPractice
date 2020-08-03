@@ -132,9 +132,23 @@ namespace PracticeCase.StudyCases
             var d3 = (Func<T3, string>)Delegate.CreateDelegate(typeof(Func<T3, string>), propInfo3.GetMethod);
             var propValue3 = d3(propValue2);
 
-            Func<Func<Func<T1, T2>, T3>, string> monsterFunc = x => x(d1).SomeString;
+            Func<Func<Func<T1, T2>, T3>, string> monsterFunc = x => x(d1).SomeString; // it doesn't make sense
 
-            monsterFunc(d2);
+
+
+            Func<T1, Func<T2, Func<T3, string>>> monsterFunc2 = x =>
+            {
+                return y =>
+                {
+                    return z => z.SomeString;
+                };
+            };
+            Func<T1, Func<T2, Func<T3, string>>> monsterFunc3 = x => y => z => z.SomeString;
+
+
+            var resultFromMonsterFunc = monsterFunc2(testObj)(testObj.nestedProp)(testObj.nestedProp.EvenMoreNestedProp);
+            var resultFromMonsterFunc3 = monsterFunc3(testObj);
+
 
             var result = d1(testObj);
             var result2 = d2(result);
@@ -162,8 +176,11 @@ namespace PracticeCase.StudyCases
             Console.WriteLine($"Lambda returned value: {f(testObj)}");
             Console.WriteLine($"Lambda elapsed: {stopwatch.ElapsedMilliseconds}");
 
+
+            int decimatedRepCount = repCount / 10;
+
             stopwatch = Stopwatch.StartNew();
-            for (int i = 0; i < repCount/10; i++)
+            for (int i = 0; i < decimatedRepCount; i++)
             {
                 string x = (string) GetPropertyValue(testObj, propertyName); //(string)propertyInfo.GetValue(testObj);
                 if (x == null)
@@ -176,7 +193,7 @@ namespace PracticeCase.StudyCases
             stopwatch = Stopwatch.StartNew();
             for (int i = 0; i < repCount; i++)
             {
-                string x = d(testObj);
+                string x = d3(d2(d1(testObj)));
                 if (x == null)
                     dummy++;
             }
@@ -212,6 +229,7 @@ namespace PracticeCase.StudyCases
 
             foreach (var prop in fieldOrPropName.Split("."))
             {
+                
                 body = Expression.PropertyOrField(body, prop);
             }
 
