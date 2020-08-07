@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeScriptPractice", "TypeS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorPractice", "BlazorPractice\BlazorPractice.csproj", "{34D301A9-AF62-4C44-AEFC-FAFF96404613}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{90A87EFA-6CAE-4020-9D0A-EC44C301E8F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj", "{90A87EFA-6CAE-4020-9D0A-EC44C301E8F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeadlockTestsWPF", "DeadlockTests\DeadlockTestsWPF.csproj", "{65630805-4ED2-49F4-9BF0-D00A8E652F9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{90A87EFA-6CAE-4020-9D0A-EC44C301E8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90A87EFA-6CAE-4020-9D0A-EC44C301E8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90A87EFA-6CAE-4020-9D0A-EC44C301E8F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65630805-4ED2-49F4-9BF0-D00A8E652F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65630805-4ED2-49F4-9BF0-D00A8E652F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65630805-4ED2-49F4-9BF0-D00A8E652F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65630805-4ED2-49F4-9BF0-D00A8E652F9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
