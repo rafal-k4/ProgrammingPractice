@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,33 +31,66 @@ namespace DeadlockTests
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //var task = GetSomethingAsync();
-            //var result = task.Result; // this does deadlock
+            var threadId1 = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in TOP-LEVEL Before: {threadId1}");
 
             var task1 = GetSiteLengthAsync(@"https://www.google.com/");
             var result2 = task1.Result; // this does deadlock
-        }
 
-        private async Task<string> GetSomethingAsync()
-        {
-            await Task.Delay(200).ConfigureAwait(false);
+            var threadId2 = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in TOP-LEVEL After: {threadId2}");
 
-            return "42";
+            // when used with async-await:
+            // Thread ID in TOP - LEVEL Before: 1
+            // Thread ID in FIRST - LEVEL Method Before await: 1
+            // Thread ID in SECOND - LEVEL Method Before await: 1
+            // Thread ID in SECOND - LEVEL Method After await: 12
+            // Thread ID in FIRST - LEVEL Method After await: 1
+            // Thread ID in TOP - LEVEL After: 1
+
+            // when used with .Result (ConfigureAwait(false) needed even in FIRST-LEVEL Method!)
+            // ConfigureAwait(false) in FIRST-LEVEL and in SECOND-LEVEL Method
+            // Thread ID in TOP - LEVEL Before: 1
+            // Thread ID in FIRST - LEVEL Method Before await: 1
+            // Thread ID in SECOND - LEVEL Method Before await: 1
+            // Thread ID in SECOND - LEVEL Method After await: 13
+            // Thread ID in FIRST - LEVEL Method After await: 13
+            // Thread ID in TOP - LEVEL After: 1
+
+            // when used with .Result (ConfigureAwait(false) needed even in FIRST-LEVEL Method!)
+            // ConfigureAwait(false) in First-Level OR Second-Level CAUSE A DEADLOCK!!
+            // Thread ID in TOP - LEVEL Before: 1
+            // Thread ID in FIRST - LEVEL Method Before await: 1
+            // Thread ID in SECOND - LEVEL Method Before await: 1
+            // DEADLOCK!
+
         }
 
         private async Task<int> GetSiteLengthAsync(string url)
         {
-            //using var client = new HttpClient();
-            //var content = await client.GetStringAsync(url);
-            //return content.Length;
-            var result = await GetSiteLengthAsyncNested(url); // this does deadlock too !!
+            var threadId = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in FIRST-LEVEL Method Before await: {threadId}");
+
+            var result = await GetSiteLengthAsyncNested(url).ConfigureAwait(false); // this does deadlock too without ConfigureAwait(false) !! 
+
+            var threadId2 = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in FIRST-LEVEL Method After await: {threadId2}");
+
             return result;
         }
 
         private async Task<int> GetSiteLengthAsyncNested(string url)
         {
             using var client = new HttpClient();
-            var content = await client.GetStringAsync(url).ConfigureAwait(false);
+
+            var threadId = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in SECOND-LEVEL Method Before await: {threadId}");
+
+            var content = await client.GetStringAsync(url);
+
+            var threadId2 = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in SECOND-LEVEL Method After await: {threadId2}");
+
             return content.Length;
         }
     }
