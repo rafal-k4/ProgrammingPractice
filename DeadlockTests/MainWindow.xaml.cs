@@ -34,8 +34,12 @@ namespace DeadlockTests
             var threadId1 = Thread.CurrentThread.ManagedThreadId;
             Debug.WriteLine($"Thread ID in TOP-LEVEL Before: {threadId1}");
 
-            var task1 = GetSiteLengthAsync(@"https://www.google.com/");
-            var result2 = task1.Result; // this does deadlock
+            //var task1 = GetSiteLengthAsync(@"https://www.google.com/");
+            //var result1 = task1.Result; // this does deadlock
+
+            var task2 = TestForTask_FromResult();
+            var result2 = task2.Result;
+            Debug.WriteLine($"Result from Task.FromResult: {result2}");
 
             var threadId2 = Thread.CurrentThread.ManagedThreadId;
             Debug.WriteLine($"Thread ID in TOP-LEVEL After: {threadId2}");
@@ -64,6 +68,48 @@ namespace DeadlockTests
             // Thread ID in SECOND - LEVEL Method Before await: 1
             // DEADLOCK!
 
+            // Task.FromResult doesn't DEADLOCK !!! Task.FromResult is running synchronously (Task.FromResult return completed Task)
+            // 
+            // Thread ID in TOP - LEVEL Before: 1
+            // Thread ID in FIRST - LEVEL Method Before await: 1
+            // Thread ID in SECOND - LEVEL Method Before await: 1
+            // Thread ID in SECOND - LEVEL Method After await: 1
+            // Thread ID in FIRST - LEVEL Method After await: 1
+            // Result from Task.FromResult: Task from result TEST
+            // Thread ID in TOP - LEVEL After: 1
+
+        }
+
+        private async Task<string> TestForTask_FromResult()
+        {
+            var threadId = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in FIRST-LEVEL Method Before await: {threadId}");
+
+            Debug.WriteLine("Before method");
+            var nestedResult = NestedTask_FromResult();
+            Debug.WriteLine("After method, before await");
+            await nestedResult;
+            Debug.WriteLine("After await");
+
+            var threadId2 = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in FIRST-LEVEL Method After await: {threadId2}");
+            
+            return "abc";
+        }
+
+        private Task<string> NestedTask_FromResult()
+        {
+            var threadId = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in SECOND-LEVEL Method Before await: {threadId}");
+
+            var result = "Task from result TEST";
+            var task = Task.FromResult(result);
+
+            var threadId2 = Thread.CurrentThread.ManagedThreadId;
+            Debug.WriteLine($"Thread ID in SECOND-LEVEL Method After await: {threadId2}");
+
+
+            return task;
         }
 
         private async Task<int> GetSiteLengthAsync(string url)
