@@ -88,13 +88,13 @@ namespace DeadlockTests
             Debug.WriteLine("Before method");
             var nestedResult = NestedTask_FromResult();
             Debug.WriteLine("After method, before await");
-            await nestedResult;
+            var result = await nestedResult;
             Debug.WriteLine("After await");
 
             var threadId2 = Thread.CurrentThread.ManagedThreadId;
             Debug.WriteLine($"Thread ID in FIRST-LEVEL Method After await: {threadId2}");
             
-            return nestedResult;
+            return result;
         }
 
         private Task<string> NestedTask_FromResult()
