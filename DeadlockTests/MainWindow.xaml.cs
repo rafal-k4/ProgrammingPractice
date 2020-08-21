@@ -94,7 +94,7 @@ namespace DeadlockTests
             var threadId2 = Thread.CurrentThread.ManagedThreadId;
             Debug.WriteLine($"Thread ID in FIRST-LEVEL Method After await: {threadId2}");
             
-            return "abc";
+            return nestedResult;
         }
 
         private Task<string> NestedTask_FromResult()
