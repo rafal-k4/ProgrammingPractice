@@ -12,41 +12,60 @@ namespace PracticeCase.StudyCases
         public void Execute()
         {
             //ExecuteExampleCodeFromBook();
+
             var secretMessage = "My top secret message";
-            byte[] key;
-            byte[] initializationVector;
+            byte[] key = new byte[] { };
+            byte[] initializationVector = new byte[] { };
 
             byte[] encryptedMessage;
+            byte[] buffer = new byte[1000];
 
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var advancedEncryptionStandard = Aes.Create())
-                {
-                    var encryptor = advancedEncryptionStandard.CreateEncryptor();
+            using var memoryStream = new MemoryStream();
+            using var advancedEncryptionStandardInstance = Aes.Create();
 
-                    using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (var streamWriter = new StreamWriter(cryptoStream))
-                        {
-                            streamWriter.Write(secretMessage);
-                            
-                        }
+            key = advancedEncryptionStandardInstance.Key;
+            initializationVector = advancedEncryptionStandardInstance.IV;
 
-                        encryptedMessage = memoryStream.ToArray();
-                    }
-                }
-            }
+            var encryptor = advancedEncryptionStandardInstance.CreateEncryptor();
 
-            //var asd = memoryStream.ToArray();
-
+            using var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
+            using var streamWriter = new StreamWriter(cryptoStream);
+                        
+            streamWriter.Write(secretMessage);
+            streamWriter.Flush(); 
+            
+            // after flush memoryStream contains all bytes
+            var encryptedBytes = memoryStream.ToArray();
+            var encryptedBytes2 = buffer;
+            encryptedMessage = memoryStream.ToArray();
+                        
+                        
+            // WRITE RESULT
             Console.WriteLine($"Encrypted message: {Encoding.Default.GetString(encryptedMessage)}");
-            Console.WriteLine($"Encrypted bytes: ");
+            Console.Write($"Encrypted bytes: ");
             foreach (var b in encryptedMessage)
+            {
                 Console.Write($"{b:X} ");
+            }
+            
 
-            //using var streamReader = new StreamReader(memoryStream);
+            using var decryptedMemoryStream = new MemoryStream(encryptedMessage);
 
-            //var bytesFromStream = streamReader.ReadToEnd();
+            var AesInstance = Aes.Create();
+            AesInstance.Padding = PaddingMode.None;
+            AesInstance.Key = key;
+            AesInstance.IV = initializationVector;
+            var decryptor = AesInstance.CreateDecryptor();
+
+            using var decryptStream = new CryptoStream(decryptedMemoryStream, decryptor, CryptoStreamMode.Read);
+            using var streamReader = new StreamReader(decryptStream);
+
+            //streamReader.
+            var decryptedMessage = streamReader.ReadToEnd();
+            
+            Console.WriteLine($"{Environment.NewLine}Decrypted Message: {decryptedMessage}");
+
+
             Console.ReadLine();
         }
 
