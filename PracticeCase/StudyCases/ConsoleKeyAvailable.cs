@@ -21,6 +21,17 @@ namespace PracticeCase.StudyCases
                 Task.Delay(800).GetAwaiter().GetResult();
             }
 
+            Console.ReadLine();
+            Console.WriteLine("Press ESC to break");
+            
+            do
+            {
+                while(Console.KeyAvailable == false)
+                {
+                    Console.WriteLine("Doing something in ESC only to exit");
+                    Task.Delay(800).GetAwaiter().GetResult();
+                }
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
     }
 }
