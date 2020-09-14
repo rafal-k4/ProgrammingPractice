@@ -14,25 +14,28 @@ namespace Interop_Excel
                 Visible = false
             };
 
-            Excel.Workbook workbook = excelApp.Workbooks.Open(@"C:\Temp\ErrorsOutput.xlsx");
+            Excel.Workbook excelWorkbook = excelApp.Workbooks.Open(@"C:\Temp\ErrorsOutput.xlsx");
 
-            Excel.Worksheet excelWorksheet = (Excel.Worksheet)workbook.Sheets[1];
+            Excel.Worksheet excelWorksheet = (Excel.Worksheet)excelWorkbook.Sheets[1];
 
             Excel.Range excelRange = excelWorksheet.UsedRange;
 
             var errorsList = new List<ErrorModel>();
 
-            for (int i = 1; i <= excelRange.Rows.Count; i++)
+            for (int i = 2; i <= excelRange.Rows.Count; i++)
             {
                 var errorModel = new ErrorModel()
                 {
-                    Id = Guid.Parse(excelWorksheet.Cells[i, 1].ToString()),
-                    Message = excelWorksheet.Cells[i, 9].ToString(),
-                    Details = excelWorksheet.Cells[i, 15].ToString()
+                    Id = (excelWorksheet.Cells[i, 1] as Excel.Range).Value.ToString(),
+                    Message = (excelWorksheet.Cells[i, 9] as Excel.Range).Value.ToString(),
+                    Details = (excelWorksheet.Cells[i, 15] as Excel.Range).Value.ToString()
                 };
 
                 errorsList.Add(errorModel);
             }
+
+            excelWorkbook.Close();
+            excelApp.Quit();
 
             ;
 
@@ -41,7 +44,7 @@ namespace Interop_Excel
 
     class ErrorModel
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Message { get; set; }
         public string Details { get; set; }
 
