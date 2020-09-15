@@ -19,7 +19,7 @@ namespace Interop_Excel
         static void Main(string[] args)
         {
 
-            List<ErrorModel> errorsList = GetDataFromExcel(@"C:\Temp\ErrorsOutput3.xlsx", out Excel.Application excelApp, out Excel.Workbook excelWorkbook);
+            List<ErrorModel> errorsList = GetDataFromExcel(@"C:\Temp\Errors_LOCAL.xlsx", out Excel.Application excelApp, out Excel.Workbook excelWorkbook);
 
             List<ErrorModel> dataWithEmails = FilterDataWithMails(errorsList);
 
@@ -90,7 +90,7 @@ namespace Interop_Excel
                 Visible = false
             };
 
-            excelWorkbook = excelApp.Workbooks.Open(@"C:\Temp\ErrorsOutput3.xlsx");
+            excelWorkbook = excelApp.Workbooks.Open(pathToExcelFile);
 
             Excel.Worksheet excelWorksheet = (Excel.Worksheet)excelWorkbook.Sheets[1];
 
