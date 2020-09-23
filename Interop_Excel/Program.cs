@@ -12,9 +12,9 @@ namespace Interop_Excel
     class Program
     {
 
-        private static Regex mailMatch = new Regex(@"([a-zA-Z0-9 +._,-]+@[a-zA-Z0-9._,-]+[\.,][a-zA-Z0-9_-]+)", RegexOptions.Multiline);
+        private static Regex mailMatch = new Regex(@"([a-zA-Z0-9 +._,-]+@[a-zA-Z0-9 ._,->]*[\.,][a-zA-Z0-9 _-]+)", RegexOptions.Multiline);
 
-        private static Regex defaultAccountMailMatch = new Regex(@"(?=.*[0-9])(?=.*[A-z])[A-Za-z0-9]{8}@[A-z0-9.]+(co.uk)", RegexOptions.IgnoreCase);
+        private static Regex defaultAccountMailMatch = new Regex(@"(?=.*[0-9])(?=.*[A-z])[A-Za-z0-9]{8}@(aboutstyle.co.uk|aboustyle.co.uk)", RegexOptions.IgnoreCase);
 
         static void Main(string[] args)
         {
@@ -43,18 +43,19 @@ namespace Interop_Excel
 
             File.WriteAllText(
                 @"C:\Temp\Result-delete.sql",
-                GetDeleteScriptContent(dataWithEmails));
+                $"DELETE FROM [SaleErrorLogging].[dbo].[aspnet_WebEvent_Events] {Environment.NewLine}" +
+                $"WHERE EventId in ('{string.Join($"', {Environment.NewLine}'", dataWithEmails.Select(x => x.Id))}')");
 
         }
 
         private static string GetDeleteScriptContent(List<ErrorModel> dataWithEmails)
         {
             StringBuilder deleteScript = new StringBuilder();
-
+            deleteScript.Append("DELETE FROM [SaleErrorLogging].[dbo].[aspnet_WebEvent_Events] WHERE [EventId] in (");
             foreach (var errorModel in dataWithEmails)
             {
                 deleteScript.AppendLine(
-                    $"DELETE FROM [SaleErrorLogging].[dbo].[aspnet_WebEvent_Events] WHERE [EventId] = '{errorModel.Id}'");
+                    $" = '{errorModel.Id}'");
                 deleteScript.AppendLine();
             }
 
