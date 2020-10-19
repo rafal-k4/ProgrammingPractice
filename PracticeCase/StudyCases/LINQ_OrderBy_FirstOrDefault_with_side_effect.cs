@@ -36,6 +36,7 @@ namespace PracticeCase.StudyCases
         private bool TryRegisterUserExample(int i)
         {
             Console.WriteLine($"Registration of users: {i}");
+            // Some logic that will register user and return true if succeeded
             return true;
         }
 
