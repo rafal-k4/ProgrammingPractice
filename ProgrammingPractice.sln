@@ -22,6 +22,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DesignPatterns", "DesignPatterns", "{F00E4797-373A-4960-9252-0C617611FD0E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpecificationPattern", "SpecificationPattern", "{9D0ED178-6F84-4958-86E7-81F0A5621C8D}"
+	ProjectSection(SolutionItems) = preProject
+		DatabaseWithDirector.sql = DatabaseWithDirector.sql
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecificationPatternUI", "SpecificationPatternUI\SpecificationPatternUI.csproj", "{F1CEEB07-47BE-4995-B86C-18D52BC1BCE0}"
 EndProject

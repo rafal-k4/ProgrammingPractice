@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SpecificationPatternUI.Common;
 using SpecificationPatternUI.Data;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,9 @@ namespace SpecificationPatternUI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            SqlHelpers.CreateDatabase(Configuration.GetConnectionString("localDb"));
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
