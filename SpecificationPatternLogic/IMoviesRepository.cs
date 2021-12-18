@@ -6,5 +6,6 @@ namespace SpecificationPatternLogic
     public interface IMoviesRepository
     {
         IReadOnlyList<Movie> GetMovies(bool forKidsOnly, bool cdAvailable, int minRating);
+        Movie GetById(long movieId);
     }
 }

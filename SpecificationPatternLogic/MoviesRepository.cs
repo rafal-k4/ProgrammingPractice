@@ -15,6 +15,11 @@ namespace SpecificationPatternLogic
             this.dbContext = dbContext;
         }
 
+        public Movie GetById(long movieId)
+        {
+            return dbContext.Movies.First(x => x.MovieId == movieId);
+        }
+
         public IReadOnlyList<Movie> GetMovies(bool forKidsOnly, bool cdAvailable, int minRating)
         {
             return dbContext.Movies
