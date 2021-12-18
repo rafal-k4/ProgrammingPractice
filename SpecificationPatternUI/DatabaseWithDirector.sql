@@ -59,17 +59,17 @@ GO
 SET IDENTITY_INSERT [dbo].[Movie] ON 
 
 GO
-INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (1, N'The Amazing Spider-Man', CAST(N'2012-07-03 00:00:00.000' AS DateTime), 3, N'Adventure', 7, 1)
+INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (1, N'The Amazing Spider-Man', CAST(N'2020-07-03 00:00:00.000' AS DateTime), 3, N'Adventure', 7, 1)
 GO
-INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (2, N'Beauty and the Beast', CAST(N'2017-03-17 00:00:00.000' AS DateTime), 3, N'Family', 7.8, 2)
+INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (2, N'Beauty and the Beast', CAST(N'2021-03-17 00:00:00.000' AS DateTime), 3, N'Family', 7.8, 2)
 GO
-INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (3, N'The Secret Life of Pets', CAST(N'2016-07-08 00:00:00.000' AS DateTime), 1, N'Adventure', 6.6, 3)
+INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (3, N'The Secret Life of Pets', CAST(N'2021-07-08 00:00:00.000' AS DateTime), 1, N'Adventure', 6.6, 3)
 GO
-INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (4, N'The Jungle Book', CAST(N'2016-04-15 00:00:00.000' AS DateTime), 2, N'Fantasy', 7.5, 4)
+INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (4, N'The Jungle Book', CAST(N'2021-04-15 00:00:00.000' AS DateTime), 2, N'Fantasy', 7.5, 4)
 GO
-INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (5, N'Split', CAST(N'2017-01-20 00:00:00.000' AS DateTime), 3, N'Horror', 7.4, 5)
+INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (5, N'Split', CAST(N'2021-01-20 00:00:00.000' AS DateTime), 3, N'Horror', 7.4, 5)
 GO
-INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (6, N'The Mummy', CAST(N'2017-06-09 00:00:00.000' AS DateTime), 4, N'Action', 6.7, 6)
+INSERT [dbo].[Movie] ([MovieID], [Name], [ReleaseDate], [MpaaRating], [Genre], [Rating], [DirectorID]) VALUES (6, N'The Mummy', CAST(N'2021-06-09 00:00:00.000' AS DateTime), 4, N'Action', 6.7, 6)
 GO
 SET IDENTITY_INSERT [dbo].[Movie] OFF
 GO
