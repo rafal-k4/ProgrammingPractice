@@ -33,6 +33,8 @@ namespace SpecificationPatternUI
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
+            services.AddScoped<IMoviesRepository, MoviesRepository>();
+
             services.AddDbContext<SpecPatternDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("localDb"));
