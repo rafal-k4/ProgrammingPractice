@@ -15,6 +15,16 @@ namespace SpecificationPatternLogic
             this.dbContext = dbContext;
         }
 
+        public bool IsForChildOnly(Movie movie)
+        {
+            return movie.MpaaRating <= MpaaRating.PG;
+        }
+
+        public bool IsCdAvailable(Movie movie)
+        {
+            return movie.ReleaseDate <= DateTime.Now.AddMonths(-6);
+        }
+
         public Movie GetById(long movieId)
         {
             return dbContext.Movies.First(x => x.MovieId == movieId);
@@ -23,8 +33,9 @@ namespace SpecificationPatternLogic
         public IReadOnlyList<Movie> GetMovies(bool forKidsOnly, bool cdAvailable, int minRating)
         {
             return dbContext.Movies
-                .Where(x => x.MpaaRating <= MpaaRating.PG || !forKidsOnly)
-                .Where(x => x.ReleaseDate <= DateTime.Now.AddMonths(-6) || !cdAvailable)
+                // solution .ToList() ??
+                .Where(x => IsForChildOnly(x) || !forKidsOnly)
+                .Where(x => IsCdAvailable(x) || !cdAvailable)
                 .Where(x => x.Rating >= minRating)
                 .Include(x => x.Director)
                 .ToList();

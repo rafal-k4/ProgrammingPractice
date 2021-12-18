@@ -7,5 +7,7 @@ namespace SpecificationPatternLogic
     {
         IReadOnlyList<Movie> GetMovies(bool forKidsOnly, bool cdAvailable, int minRating);
         Movie GetById(long movieId);
+        bool IsForChildOnly(Movie movie);
+        bool IsCdAvailable(Movie movie);
     }
 }

@@ -126,7 +126,7 @@
 
         var movie = moviesRepository.GetById(selectedMovie);
 
-        if (movie.MpaaRating <= MpaaRating.PG)
+        if (moviesRepository.IsForChildOnly(movie))
             ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
         else
             ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
@@ -146,7 +146,7 @@
 
         var movie = moviesRepository.GetById(selectedMovie);
 
-        if (movie.ReleaseDate <= DateTime.Now.AddMonths(-6))
+        if (moviesRepository.IsCdAvailable(movie))
             ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
         else
             ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
