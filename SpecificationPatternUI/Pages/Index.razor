@@ -37,10 +37,6 @@
         </tr>
     </thead>
     <tbody>
-        @if(movies == null)
-        {
-            movies = new[] { new Movie() { Director = new Director() } };
-        }
         @foreach (var movie in movies)
         {
             string selectedMovieStyle = movie.MovieId == selectedMovie
@@ -95,14 +91,14 @@
     protected override Task OnInitializedAsync()
     {
         // Default SPEC to fetch all movies
-        //var defaultSpec = new DefaultSpecification();
-        //movies = moviesRepository.GetMovies(defaultSpec, minRating);
+        var defaultSpec = new DefaultSpecification();
+        movies = moviesRepository.GetMovies(defaultSpec, minRating);
         return base.OnInitializedAsync();
     }
 
     private void SearchMovies()
     {
-        Specification<Movie> spec = new MovieForKidsSpecification().And(new AvailableOnCDSpecification());
+        SpecificationBase<Movie> spec = new IsMovieForChildSpecification().Or(new IsCdAvailableSpecification());
 
         //if (isForKidsOnly)
         //{
@@ -148,11 +144,11 @@
         var movie = moviesRepository.GetById(selectedMovie);
 
 
-        //var isMovieForChildSpec = new IsMovieForChildSpecification();
-        //if (isMovieForChildSpec.IsSatisfiedBy(movie))
-        //    ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
-        //else
-        //    ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
+        var isMovieForChildSpec = new IsMovieForChildSpecification();
+        if (isMovieForChildSpec.IsSatisfiedBy(movie))
+            ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
+        else
+            ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
 
 
         modal.Open();
@@ -170,11 +166,11 @@
         var movie = moviesRepository.GetById(selectedMovie);
 
 
-        //var isCdAvailableSpec = new IsCdAvailableSpecification();
-        //if (isCdAvailableSpec.IsSatisfiedBy(movie))
-        //    ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
-        //else
-        //    ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
+        var isCdAvailableSpec = new IsCdAvailableSpecification();
+        if (isCdAvailableSpec.IsSatisfiedBy(movie))
+            ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
+        else
+            ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
 
         modal.Open();
     }
