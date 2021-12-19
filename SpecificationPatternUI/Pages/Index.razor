@@ -98,17 +98,17 @@
 
     private void SearchMovies()
     {
-        SpecificationBase<Movie> spec = new IsMovieForChildSpecification().Or(new IsCdAvailableSpecification());
+        SpecificationBase<Movie> spec = new DefaultSpecification();
 
-        //if (isForKidsOnly)
-        //{
-        //    spec = spec.And(new IsMovieForChildSpecification());
-        //}
+        if (isForKidsOnly)
+        {
+            spec = spec.And(new IsMovieForChildSpecification());
+        }
 
-        //if(isCdAvailable)
-        //{
-        //    spec = spec.Or(new IsCdAvailableSpecification());
-        //}
+        if (isCdAvailable)
+        {
+            spec = spec.And(new IsCdAvailableSpecification());
+        }
 
         movies = moviesRepository.GetMovies(spec, minRating);
     }
