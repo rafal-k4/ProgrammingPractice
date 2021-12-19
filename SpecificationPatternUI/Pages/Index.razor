@@ -1,0 +1,177 @@
+﻿@page "/"
+@using SpecificationPatternLogic
+@using SpecificationPatternLogic.Entities
+@using SpecificationPatternLogic.Logic
+@using System.Linq.Expressions
+@inject IMoviesRepository moviesRepository;
+
+<div></div>
+
+<input type="checkbox" id="forKidsOnly" @bind="isForKidsOnly" />
+<label class="mr-3" for="forKidsOnly"> Movies For Kids only </label>
+
+<input type="checkbox" id="cdAvailable" @bind="isCdAvailable" />
+<label class="mr-3" for="cdAvailable"> CD Available </label>
+
+<input type="number" id="minRating" @bind="minRating" style="width: 50px;" />
+<label class="mr-2" for="minRating"> Minimum Rating </label>
+
+<button class="btn btn-primary" @onclick="SearchMovies">Search Movies</button>
+
+<div></div>
+
+<button class="btn btn-primary mr-2" @onclick="BuyTicket"> Purchase regular ticket </button>
+<button class="btn btn-primary mr-2" @onclick="BuyTicketForChild"> Purchase child ticket </button>
+<button class="btn btn-primary mr-2" @onclick="BuyCD"> Purchase on CD </button>
+
+<table class="table my-3">
+    <thead class="table-primary">
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>ReleaseDate</td>
+            <td>Genre</td>
+            <td>MpaaRating</td>
+            <td>Rating</td>
+            <td>Director Name</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in movies)
+        {
+            string selectedMovieStyle = movie.MovieId == selectedMovie
+                                ? "background-color: gray"
+                                : "";
+
+            <tr @onclick="() => SelectMovie(movie.MovieId)" style="@selectedMovieStyle">
+                <td>@movie.MovieId</td>
+                <td>@movie.Name</td>
+                <td>@movie.ReleaseDate</td>
+                <td>@movie.Genre</td>
+                <td>@movie.MpaaRating</td>
+                <td>@movie.Rating</td>
+                <td>@movie.Director.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<Modal @ref="modal">
+    <Title> Ticket validator </Title>
+    <Body>
+        <p>
+            @ticketBuyResultMessage
+        </p>
+    </Body>
+    <Footer>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => modal.Close()">Close</button>
+    </Footer>
+</Modal>
+
+@code {
+    bool isForKidsOnly = false;
+    bool isCdAvailable = false;
+    int minRating = 0;
+
+    long selectedMovie = 0;
+
+    IEnumerable<Movie> movies;
+
+    private Modal modal { get; set; }
+
+    string ticketBuyResultMessage;
+
+    private readonly string successfullyPurchasedTicketsMessage = "✅ Tickets were purchased successfully";
+    private readonly string failedPurchaseOfTicketsMessage = "☒ Unfortunately, Tickets were NOT Purchased";
+    private readonly string selectMovieFirst = "Please, select a movie first";
+
+
+    protected override Task OnInitializedAsync()
+    {
+        // Default SPEC to fetch all movies
+        var defaultSpec = new DefaultSpecification();
+        movies = moviesRepository.GetMovies(defaultSpec, minRating);
+        return base.OnInitializedAsync();
+    }
+
+    private void SearchMovies()
+    {
+        SpecificationBase<Movie> spec = new DefaultSpecification();
+
+        if (isForKidsOnly)
+        {
+            spec = spec.And(new IsMovieForChildSpecification());
+        }
+
+        if (isCdAvailable)
+        {
+            spec = spec.And(new IsCdAvailableSpecification());
+        }
+
+        movies = moviesRepository.GetMovies(spec, minRating);
+    }
+
+    private void SelectMovie(long selectedMovie)
+    {
+        this.selectedMovie = selectedMovie;
+    }
+
+    private void BuyTicket()
+    {
+        if (selectedMovie == 0)
+        {
+            ticketBuyResultMessage = selectMovieFirst;
+            modal.Open();
+            return;
+        }
+
+        var movie = moviesRepository.GetById(selectedMovie);
+        ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
+        modal.Open();
+    }
+
+    private void BuyTicketForChild()
+    {
+        if (selectedMovie == 0)
+        {
+            ticketBuyResultMessage = selectMovieFirst;
+            modal.Open();
+            return;
+        }
+
+        var movie = moviesRepository.GetById(selectedMovie);
+
+
+        var isMovieForChildSpec = new IsMovieForChildSpecification();
+        if (isMovieForChildSpec.IsSatisfiedBy(movie))
+            ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
+        else
+            ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
+
+
+        modal.Open();
+    }
+
+    private void BuyCD()
+    {
+        if (selectedMovie == 0)
+        {
+            ticketBuyResultMessage = selectMovieFirst;
+            modal.Open();
+            return;
+        }
+
+        var movie = moviesRepository.GetById(selectedMovie);
+
+
+        var isCdAvailableSpec = new IsCdAvailableSpecification();
+        if (isCdAvailableSpec.IsSatisfiedBy(movie))
+            ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
+        else
+            ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
+
+        modal.Open();
+    }
+}
