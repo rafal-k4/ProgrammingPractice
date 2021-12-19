@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using SpecificationPatternLogic
 @using SpecificationPatternLogic.Entities
+@using System.Linq.Expressions 
 @inject IMoviesRepository moviesRepository;
 
 <div></div>
@@ -85,15 +86,27 @@
     private readonly string failedPurchaseOfTicketsMessage = "☒ Unfortunately, Tickets were NOT Purchased";
     private readonly string selectMovieFirst = "Please, select a movie first";
 
+
+    #region LOGIC
+
+    public Expression<Func<Movie, bool>> isForChildOnlyExpression = movie => movie.MpaaRating <= MpaaRating.PG;
+    public Expression<Func<Movie, bool>> isCdAvailableExpression = movie => movie.ReleaseDate <= DateTime.Now.AddMonths(-6);
+
+    #endregion
+
     protected override Task OnInitializedAsync()
     {
-        movies = moviesRepository.GetMovies(isForKidsOnly, isCdAvailable, minRating);
+        // always true predicate, to fetch all movies
+        Expression<Func<Movie,bool>> alwaysTrue = x => true;
+        movies = moviesRepository.GetMovies(alwaysTrue, minRating);
         return base.OnInitializedAsync();
     }
 
     private void SearchMovies()
     {
-        movies = moviesRepository.GetMovies(isForKidsOnly, isCdAvailable, minRating);
+        movies = moviesRepository.GetMovies(isForChildOnlyExpression, minRating);
+        // or other predicate, but not both at the same time
+        // movies = moviesRepository.GetMovies(isCdAvailableExpression, minRating);
     }
 
     private void SelectMovie(long selectedMovie)
@@ -126,7 +139,9 @@
 
         var movie = moviesRepository.GetById(selectedMovie);
 
-        if (moviesRepository.IsForChildOnly(movie))
+        // expression need to be translated to delegate first
+        var predicate = isForChildOnlyExpression.Compile();
+        if (predicate(movie))
             ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
         else
             ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
@@ -146,7 +161,9 @@
 
         var movie = moviesRepository.GetById(selectedMovie);
 
-        if (moviesRepository.IsCdAvailable(movie))
+        // expression need to be translated to delegate first
+        var predicate = isCdAvailableExpression.Compile();
+        if (predicate(movie))
             ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
         else
             ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
