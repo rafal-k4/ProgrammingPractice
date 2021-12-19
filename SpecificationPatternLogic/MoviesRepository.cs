@@ -22,7 +22,7 @@ namespace SpecificationPatternLogic
         public IReadOnlyList<Movie> GetMovies(SpecificationBase<Movie> specification, int minRating)
         {
             return dbContext.Movies
-                .Where(specification.Expression)
+                .Where(specification.SpecExpression)
                 .Where(x => x.Rating >= minRating)
                 .Include(x => x.Director)
                 .ToList();

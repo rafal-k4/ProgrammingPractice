@@ -98,10 +98,19 @@
 
     private void SearchMovies()
     {
-        var childSpecs = new IsMovieForChildSpecification();
-        movies = moviesRepository.GetMovies(childSpecs, minRating);
-        // or other SPEC, but not both at the same time
-        // movies = moviesRepository.GetMovies(new IsCdAvailableSpecification(), minRating);
+        SpecificationBase<Movie> spec = new IsMovieForChildSpecification().Or(new IsCdAvailableSpecification());
+
+        //if (isForKidsOnly)
+        //{
+        //    spec = spec.And(new IsMovieForChildSpecification());
+        //}
+
+        //if(isCdAvailable)
+        //{
+        //    spec = spec.Or(new IsCdAvailableSpecification());
+        //}
+
+        movies = moviesRepository.GetMovies(spec, minRating);
     }
 
     private void SelectMovie(long selectedMovie)
@@ -156,7 +165,7 @@
 
         var movie = moviesRepository.GetById(selectedMovie);
 
-        
+
         var isCdAvailableSpec = new IsCdAvailableSpecification();
         if (isCdAvailableSpec.IsSatisfiedBy(movie))
             ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";

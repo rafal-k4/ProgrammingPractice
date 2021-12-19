@@ -6,6 +6,6 @@ namespace SpecificationPatternLogic.Logic
 {
     public class DefaultSpecification : SpecificationBase<Movie>
     {
-        public override Expression<Func<Movie, bool>> Expression { get; set; } = movie => true;
+        public override Expression<Func<Movie, bool>> SpecExpression { get; } = movie => true;
     }
 }
