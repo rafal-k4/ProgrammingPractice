@@ -7,11 +7,11 @@ namespace SpecificationPatternLogic.Logic
 {
     public abstract class SpecificationBase<T>
     {
-        public abstract Expression<Func<T, bool>> SpecExpression { get; }
+        public abstract Expression<Func<T, bool>> ToExpression();
 
         public bool IsSatisfiedBy(T entity)
         {
-            var predicate = SpecExpression.Compile();
+            var predicate = ToExpression().Compile();
             return predicate(entity);
         }
 
@@ -43,17 +43,16 @@ namespace SpecificationPatternLogic.Logic
             this.secondSpec = secondSpec;
         }
 
-        public override Expression<Func<T, bool>> SpecExpression
+        public override Expression<Func<T, bool>> ToExpression()
         {
-            get
-            {
-                var firstExpression = firstSpec.SpecExpression;
-                var secondExpression = secondSpec.SpecExpression;
+            
+                var firstExpression = firstSpec.ToExpression();
+                var secondExpression = secondSpec.ToExpression();
 
                 BinaryExpression combinedLogicAndBinaryExpression = Expression.AndAlso(firstExpression.Body, secondExpression.Body);
 
                 return Expression.Lambda<Func<T, bool>>(combinedLogicAndBinaryExpression, firstExpression.Parameters.Single());
-            }
+            
         }
     }
 
@@ -68,17 +67,16 @@ namespace SpecificationPatternLogic.Logic
             this.secondSpec = secondSpec;
         }
 
-        public override Expression<Func<T, bool>> SpecExpression
+        public override Expression<Func<T, bool>> ToExpression()
         {
-            get
-            {
-                var firstExpression = firstSpec.SpecExpression;
-                var secondExpression = secondSpec.SpecExpression;
+           
+                var firstExpression = firstSpec.ToExpression();
+                var secondExpression = secondSpec.ToExpression();
 
                 BinaryExpression combinedLogicOrBinaryExpression = Expression.OrElse(firstExpression.Body, secondExpression.Body);
 
                 return Expression.Lambda<Func<T, bool>>(combinedLogicOrBinaryExpression, firstExpression.Parameters.Single());
-            }
+            
         }
     }
 
@@ -91,16 +89,16 @@ namespace SpecificationPatternLogic.Logic
             this.firstSpec = firstSpec;
         }
 
-        public override Expression<Func<T, bool>> SpecExpression
+        public override Expression<Func<T, bool>> ToExpression()
         {
-            get
-            {
-                var firstExpression = firstSpec.SpecExpression;
+           
+            
+                var firstExpression = firstSpec.ToExpression();
 
                 UnaryExpression combinedLogicOrBinaryExpression = Expression.Not(firstExpression.Body);
 
                 return Expression.Lambda<Func<T, bool>>(combinedLogicOrBinaryExpression, firstExpression.Parameters.Single());
-            }
+            
         }
     }
 }

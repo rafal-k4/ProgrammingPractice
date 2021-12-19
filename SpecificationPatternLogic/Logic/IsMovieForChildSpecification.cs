@@ -8,7 +8,10 @@ namespace SpecificationPatternLogic.Logic
 {
     public class IsMovieForChildSpecification : SpecificationBase<Movie>
     {
-        public override Expression<Func<Movie, bool>> SpecExpression { get; } = 
-            movie => movie.MpaaRating <= MpaaRating.PG;
+        public override Expression<Func<Movie, bool>> ToExpression() 
+        {
+            return movie => movie.MpaaRating <= MpaaRating.PG;
+        } 
+         
     }
 }
