@@ -1,7 +1,8 @@
 ﻿@page "/"
 @using SpecificationPatternLogic
 @using SpecificationPatternLogic.Entities
-@using System.Linq.Expressions 
+@using SpecificationPatternLogic.Logic
+@using System.Linq.Expressions
 @inject IMoviesRepository moviesRepository;
 
 <div></div>
@@ -87,26 +88,20 @@
     private readonly string selectMovieFirst = "Please, select a movie first";
 
 
-    #region LOGIC
-
-    public Expression<Func<Movie, bool>> isForChildOnlyExpression = movie => movie.MpaaRating <= MpaaRating.PG;
-    public Expression<Func<Movie, bool>> isCdAvailableExpression = movie => movie.ReleaseDate <= DateTime.Now.AddMonths(-6);
-
-    #endregion
-
     protected override Task OnInitializedAsync()
     {
-        // always true predicate, to fetch all movies
-        Expression<Func<Movie,bool>> alwaysTrue = x => true;
-        movies = moviesRepository.GetMovies(alwaysTrue, minRating);
+        // Default SPEC to fetch all movies
+        var defaultSpec = new DefaultSpecification();
+        movies = moviesRepository.GetMovies(defaultSpec, minRating);
         return base.OnInitializedAsync();
     }
 
     private void SearchMovies()
     {
-        movies = moviesRepository.GetMovies(isForChildOnlyExpression, minRating);
-        // or other predicate, but not both at the same time
-        // movies = moviesRepository.GetMovies(isCdAvailableExpression, minRating);
+        var childSpecs = new IsMovieForChildSpecification();
+        movies = moviesRepository.GetMovies(childSpecs, minRating);
+        // or other SPEC, but not both at the same time
+        // movies = moviesRepository.GetMovies(new IsCdAvailableSpecification(), minRating);
     }
 
     private void SelectMovie(long selectedMovie)
@@ -116,7 +111,7 @@
 
     private void BuyTicket()
     {
-        if(selectedMovie == 0)
+        if (selectedMovie == 0)
         {
             ticketBuyResultMessage = selectMovieFirst;
             modal.Open();
@@ -139,9 +134,9 @@
 
         var movie = moviesRepository.GetById(selectedMovie);
 
-        // expression need to be translated to delegate first
-        var predicate = isForChildOnlyExpression.Compile();
-        if (predicate(movie))
+
+        var isMovieForChildSpec = new IsMovieForChildSpecification();
+        if (isMovieForChildSpec.IsSatisfiedBy(movie))
             ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
         else
             ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
@@ -161,9 +156,9 @@
 
         var movie = moviesRepository.GetById(selectedMovie);
 
-        // expression need to be translated to delegate first
-        var predicate = isCdAvailableExpression.Compile();
-        if (predicate(movie))
+        
+        var isCdAvailableSpec = new IsCdAvailableSpecification();
+        if (isCdAvailableSpec.IsSatisfiedBy(movie))
             ticketBuyResultMessage = successfullyPurchasedTicketsMessage + $"for movie: {movie.Name}";
         else
             ticketBuyResultMessage = failedPurchaseOfTicketsMessage;
