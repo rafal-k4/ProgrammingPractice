@@ -19,7 +19,7 @@ namespace SpecificationPatternLogic
             return dbContext.Movies.First(x => x.MovieId == movieId);
         }
 
-        public IReadOnlyList<Movie> GetMovies(SpecificationBase<Movie> specification, int minRating)
+        public IReadOnlyList<Movie> GetMovies(Specification<Movie> specification, int minRating)
         {
             return dbContext.Movies
                 .Where(specification.ToExpression())

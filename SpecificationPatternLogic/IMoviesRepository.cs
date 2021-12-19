@@ -6,7 +6,7 @@ namespace SpecificationPatternLogic
 {
     public interface IMoviesRepository
     {
-        IReadOnlyList<Movie> GetMovies(SpecificationBase<Movie> specification, int minRating);
+        IReadOnlyList<Movie> GetMovies(Specification<Movie> specification, int minRating);
         Movie GetById(long movieId);
     }
 }
